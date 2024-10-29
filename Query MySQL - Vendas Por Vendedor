@@ -1,0 +1,19 @@
+--Vendas por vendedor
+
+SELECT 
+   L1.L1_EMISNF AS 'Data da Venda',
+   L1.L1_FILIAL AS "Número da Loja",
+   (L1.L1_VLRLIQ - L1.L1_CREDITO) AS "Valor da Venda",			 
+   L1.L1_VEND AS Vendedor,
+   A3.A3_NOME AS "Nome do Vendedor"
+FROM 
+   SL1050 L1 WITH (NOLOCK)
+JOIN 
+   SA3050 A3 WITH (NOLOCK)
+   ON L1.L1_VEND = A3.A3_COD  
+   AND L1.L1_FILIAL = A3.A3_FILIAL
+WHERE 
+   L1.L1_EMISNF BETWEEN '20240101' AND '20251231'
+   AND L1.D_E_L_E_T_ <> '*'
+   AND L1.L1_FORMPG <> ''
+   AND L1.L1_DOC <> ''
